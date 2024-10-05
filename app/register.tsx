@@ -58,6 +58,7 @@ export default function Register(): JSX.Element {
         const currentDate: Date = selectedDate || date;
         setShow(false);
         setDate(currentDate);
+        setRegisterForm({ ...registerForm, date: currentDate });
     };
 
     const showDatepicker = (): void => {
