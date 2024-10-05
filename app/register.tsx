@@ -71,6 +71,14 @@ export default function Register(): JSX.Element {
         setRegisterForm({ ...registerForm, [field]: text });
     };
 
+    useEffect(()=>{
+        if(registerForm.fullname !== '' && registerForm.username !== '' && registerForm.password !== '' && registerForm.confirmPassword !== '' && registerForm.date !== ''){
+            setFormFilled(true)
+        } else {
+            setFormFilled(false)
+        }
+    },[registerForm])
+
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text style={{ fontSize: 24, marginBottom: 10, fontWeight: "bold", textAlign: "center", color: "#0a7ea4" }}>New Register</Text>
@@ -92,7 +100,7 @@ export default function Register(): JSX.Element {
             <TextInput onChange={(event) => handleChange(event, "email")} placeholder="Email" style={{ width: 350, height: 60, borderColor: "gray", borderWidth: 1, margin: 10, padding: 10, borderRadius: 5 }} />
             <TextInput onChange={(event) => handleChange(event, "password")} placeholder="Password" secureTextEntry={true} style={{ width: 350, height: 60, borderColor: "gray", borderWidth: 1, margin: 10, padding: 10, borderRadius: 5 }} />
             <TextInput onChange={(event) => handleChange(event, "confirmPassword")} placeholder="Confirm Password" secureTextEntry={true} style={{ width: 350, height: 60, borderColor: "gray", borderWidth: 1, margin: 10, padding: 10, borderRadius: 5 }} />
-            <Button mode="contained-tonal" style={{ marginTop: 15, ...pressed ? btnPressedStyle : btnReleasedStyle }} onPressIn={() => setPressed(!pressed)} onPressOut={() => setPressed(!pressed)}>Login</Button>
+            <Button disabled={!formFilled} mode="contained-tonal" style={{ marginTop: 15, ...pressed ? btnPressedStyle : btnReleasedStyle }} onPressIn={() => setPressed(!pressed)} onPressOut={() => setPressed(!pressed)}>Login</Button>
         </View>
     );
 }
