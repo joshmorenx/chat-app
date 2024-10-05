@@ -43,6 +43,16 @@ export default function Index() {
     elevation: 5
   };
 
+  const inputStyle = {
+    width: 350,
+    height: 60,
+    borderColor: "gray",
+    borderWidth: 1,
+    margin: 10,
+    padding: 10,
+    borderRadius: 5
+  };
+
   const handleChange = (event: NativeSyntheticEvent<TextInputChangeEventData>, field: string) => {
     const { text } = event.nativeEvent;
     setLoginForm({ ...loginForm, [field]: text });
@@ -57,11 +67,11 @@ export default function Index() {
   }, [loginForm])
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>      
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <View style={{ alignItems: "center" }}>
         <Text style={{ fontSize: 24, marginBottom: 10, fontWeight: "bold", textAlign: "center", color: "#0a7ea4" }}>Welcome!</Text>
-        <TextInput onChange={(event) => handleChange(event, "username")} placeholder="Username" style={{ width: 350, height: 60, borderColor: "gray", borderWidth: 1, margin: 10, padding: 10, borderRadius: 5 }} />
-        <TextInput onChange={(event) => handleChange(event, "password")} placeholder="Password" secureTextEntry={true} style={{ width: 350, height: 60, borderColor: "gray", borderWidth: 1, margin: 10, padding: 10, borderRadius: 5 }} />
+        <TextInput onChange={(event) => handleChange(event, "username")} placeholder="Username" style={inputStyle} />
+        <TextInput onChange={(event) => handleChange(event, "password")} placeholder="Password" secureTextEntry={true} style={inputStyle} />
         <Button disabled={!formFilled} mode="contained-tonal" style={{ marginTop: 15, ...pressed ? btnPressedStyle : btnReleasedStyle }} onPressIn={() => setPressed(!pressed)} onPressOut={() => setPressed(!pressed)}>Login</Button>
       </View>
 

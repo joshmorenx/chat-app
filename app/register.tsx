@@ -3,6 +3,7 @@ import { View, Text, TextInput } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useState, useEffect } from "react";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useValidateForm } from '@/hooks/useValidateForm'
 
 interface RegisterForm {
     fullname: string;
@@ -14,6 +15,7 @@ interface RegisterForm {
 }
 
 export default function Register(): JSX.Element {
+    const { value, getGivenData } = useValidateForm(10, 'Joshua Moreno');
     const allowedNameCharacters = /^[a-zA-Z\s]*$/;
     const allowedUserCharacters = /^[a-zA-Z0-9]*$/;
     const allowedEmailCharacters = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
@@ -91,6 +93,10 @@ export default function Register(): JSX.Element {
         }
     }, [registerForm]);
 
+    useEffect(()=>{
+        (value) && alert(value);
+    }, [value])
+
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -119,7 +125,7 @@ export default function Register(): JSX.Element {
                 <TextInput onChange={(event) => handleChange(event, "email")} placeholder="Email" style={inputStyle} />
                 <TextInput onChange={(event) => handleChange(event, "password")} placeholder="Password" secureTextEntry={true} style={inputStyle} />
                 <TextInput onChange={(event) => handleChange(event, "confirmPassword")} placeholder="Confirm Password" secureTextEntry={true} style={inputStyle} />
-                <Button disabled={!formFilled} mode="contained-tonal" style={{ marginTop: 15, ...(pressed ? btnPressedStyle : btnReleasedStyle) }} onPressIn={() => setPressed(!pressed)} onPressOut={() => setPressed(!pressed)}>Register</Button>
+                <Button onPress={() => getGivenData()} disabled={!formFilled} mode="contained-tonal" style={{ marginTop: 15, ...(pressed ? btnPressedStyle : btnReleasedStyle) }} onPressIn={() => setPressed(!pressed)} onPressOut={() => setPressed(!pressed)}>Register</Button>
             </View>
         </ScrollView>
     );
