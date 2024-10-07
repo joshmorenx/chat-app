@@ -2,51 +2,16 @@ import { NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
 import { Text, TextInput, View } from "react-native";
 import { Button } from "react-native-paper";
 import { useEffect, useState } from "react";
+import { btnPressedStyle, btnReleasedStyle, inputStyle } from '@/components/ThemedInputs';
 
 interface ForgotForm {
     emailOrUsername: string;
 }
 
-export default function Forgot() {
+export default function Forgot(): JSX.Element {
     const [forgotForm, setForgotForm] = useState<ForgotForm>({ emailOrUsername: "" });
     const [pressed, setPressed] = useState<boolean>(false);
     const [formFilled, setFormFilled] = useState<boolean>(false);
-
-    const btnPressedStyle = {
-        borderRadius: 5,
-        width: 350,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0,
-        shadowRadius: 0,
-        elevation: 5
-    };
-
-    const btnReleasedStyle = {
-        borderRadius: 5,
-        width: 350,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
-    };
-
-    const inputStyle = {
-        width: 350,
-        height: 60,
-        borderColor: "gray",
-        borderWidth: 1,
-        margin: 10,
-        padding: 10,
-        borderRadius: 5
-    };
 
     const handleChange = (event: NativeSyntheticEvent<TextInputChangeEventData>, field: string) => {
         const { text } = event.nativeEvent;
