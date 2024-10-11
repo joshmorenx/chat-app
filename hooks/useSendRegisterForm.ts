@@ -14,6 +14,10 @@ type setState<T> = React.Dispatch<React.SetStateAction<T>>
 
 export function useSendRegisterForm(initialForm: RegisterForm, setShow: setState<boolean>, setDateSetted: setState<boolean>, setDate: setState<Date>) {
     const [formData, setFormData] = useState(initialForm)
+    const validEmailString: RegExp = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    const validPasswordString: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+    const validUsernameString: RegExp = /^[a-zA-Z0-9]+$/;
+    const validFullNameString: RegExp = /^[a-zA-Z ]+$/;
 
     const handleChange = (event: NativeSyntheticEvent<TextInputChangeEventData>, value: string) => {
         const { text } = event.nativeEvent
@@ -42,5 +46,32 @@ export function useSendRegisterForm(initialForm: RegisterForm, setShow: setState
         }
     };
 
-    return { formData, handleChange, changing }
+    const sendRequest = async () => {
+        if (!validFullNameString.test(formData.fullname)) {
+            alert("Name is not valid");
+            return;
+        }
+
+        if (!validUsernameString.test(formData.username)) {
+            alert("Username is not valid");
+            return;
+        }
+
+        if (!validEmailString.test(formData.email)) {
+            alert("Email is not valid");
+            return;
+        }
+
+        if (!validPasswordString.test(formData.password)) {
+            alert("Password is not valid");
+            return;
+        }
+
+        if (formData.password !== formData.confirmPassword) {
+            alert("Passwords do not match");
+            return;
+        }
+    }
+
+    return { formData, handleChange, changing, sendRequest }
 }

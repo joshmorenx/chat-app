@@ -5,23 +5,16 @@ import { Button } from "react-native-paper";
 import { useEffect, useState } from "react";
 import { NavigationProp } from '@react-navigation/native';
 import { btnPressedStyle, btnReleasedStyle, inputStyle } from '@/components/ThemedInputs';
-
-interface LoginForm {
-  username: string;
-  password: string;
-}
+import { useSendLoginForm } from '@/hooks/useSendLoginForm';
 
 export default function Index(): JSX.Element {
-  const [loginForm, setLoginForm] = useState<LoginForm>({ username: "", password: "" });
   const [pressed, setPressed] = useState<boolean>(false);
-  const [formFilled, setFormFilled] = useState<boolean>(false);
+  const { loginForm, handleChange, formFilled, setFormFilled, sendLoginForm } = useSendLoginForm({
+    username: "",
+    password: ""
+  });
 
   const navigation: NavigationProp<any> = useNavigation();
-
-  const handleChange = (event: NativeSyntheticEvent<TextInputChangeEventData>, field: string) => {
-    const { text } = event.nativeEvent;
-    setLoginForm({ ...loginForm, [field]: text });
-  };
 
   useEffect(() => {
     if (loginForm.username !== "" && loginForm.password !== "") {
@@ -37,7 +30,7 @@ export default function Index(): JSX.Element {
         <Text style={{ fontSize: 24, marginBottom: 10, fontWeight: "bold", textAlign: "center", color: "#0a7ea4" }}>Welcome!</Text>
         <TextInput onChange={(event) => handleChange(event, "username")} placeholder="Username" style={inputStyle} />
         <TextInput onChange={(event) => handleChange(event, "password")} placeholder="Password" secureTextEntry={true} style={inputStyle} />
-        <Button disabled={!formFilled} mode="contained-tonal" style={{ marginTop: 15, ...pressed ? btnPressedStyle : btnReleasedStyle }} onPressIn={() => setPressed(!pressed)} onPressOut={() => setPressed(!pressed)}>Login</Button>
+        <Button onPress={sendLoginForm} disabled={!formFilled} mode="contained-tonal" style={{ marginTop: 15, ...pressed ? btnPressedStyle : btnReleasedStyle }} onPressIn={() => setPressed(!pressed)} onPressOut={() => setPressed(!pressed)}>Login</Button>
       </View>
 
       <View style={{ marginTop: 15, gap: 80, display: "flex", flexDirection: "row" }}>
