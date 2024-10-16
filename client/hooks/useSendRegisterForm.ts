@@ -73,7 +73,7 @@ export function useSendRegisterForm(initialForm: RegisterForm, setShow: setState
             alert("Passwords do not match");
             return;
         }
-        await axios.post('http://192.168.1.67:3000/api/register', {
+        await axios.post('http://192.168.0.161:3000/api/register', {
             userData: formData
         }).then((response) => {
             setMsg(response.data.msg);
