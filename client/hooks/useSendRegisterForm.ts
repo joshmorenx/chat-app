@@ -20,6 +20,7 @@ export function useSendRegisterForm(initialForm: RegisterForm, setShow: setState
     const validUsernameString: RegExp = /^[a-zA-Z0-9]+$/;
     const validFullNameString: RegExp = /^[a-zA-Z ]+$/;
     const [msg, setMsg] = useState("")
+    const apiUrl = process.env.EXPO_PUBLIC_API_URL
 
     const handleChange = (event: NativeSyntheticEvent<TextInputChangeEventData>, value: string) => {
         const { text } = event.nativeEvent
@@ -73,7 +74,7 @@ export function useSendRegisterForm(initialForm: RegisterForm, setShow: setState
             alert("Passwords do not match");
             return;
         }
-        await axios.post('http://192.168.0.161:3000/api/register', {
+        await axios.post(`${apiUrl}/api/register`, {
             userData: formData
         }).then((response) => {
             setMsg(response.data.msg);
