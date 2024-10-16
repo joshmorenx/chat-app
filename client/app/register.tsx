@@ -12,7 +12,7 @@ export default function Register(): JSX.Element {
     const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
     const [formFilled, setFormFilled] = useState(false);
-    const { formData, handleChange, changing, sendRequest } = useSendRegisterForm({
+    const { formData, msg, setMsg, handleChange, changing, sendRequest } = useSendRegisterForm({
         fullname: '',
         username: '',
         email: '',
@@ -32,7 +32,12 @@ export default function Register(): JSX.Element {
         } else {
             setFormFilled(false);
         }
-    })
+    }) 
+
+    useEffect(()=>{
+        (msg) && alert(msg)
+        setMsg('')
+    },[msg])
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>

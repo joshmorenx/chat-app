@@ -1,5 +1,6 @@
 import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 interface RegisterForm {
     fullname: string;
@@ -18,6 +19,8 @@ export function useSendRegisterForm(initialForm: RegisterForm, setShow: setState
     const validPasswordString: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
     const validUsernameString: RegExp = /^[a-zA-Z0-9]+$/;
     const validFullNameString: RegExp = /^[a-zA-Z ]+$/;
+    const [msg, setMsg] = useState("")
+    const apiUrl = process.env.EXPO_PUBLIC_API_URL
 
     const handleChange = (event: NativeSyntheticEvent<TextInputChangeEventData>, value: string) => {
         const { text } = event.nativeEvent
@@ -71,7 +74,14 @@ export function useSendRegisterForm(initialForm: RegisterForm, setShow: setState
             alert("Passwords do not match");
             return;
         }
+        await axios.post(`${apiUrl}/api/register`, {
+            userData: formData
+        }).then((response) => {
+            setMsg(response.data.msg);
+        }).catch((error) => {
+            setMsg(error.response.data.error);
+        })
     }
 
-    return { formData, handleChange, changing, sendRequest }
+    return { formData, msg, setMsg, handleChange, changing, sendRequest }
 }
