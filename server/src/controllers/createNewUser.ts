@@ -1,4 +1,6 @@
-export async function createNewUser(req: any, res: any) {
+import express from 'express';
+
+export async function createNewUser(req: express.Request, res: express.Response) {
     const { userData } = req.body;
     try {
         console.log(userData);

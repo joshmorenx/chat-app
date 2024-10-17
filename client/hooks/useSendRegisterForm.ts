@@ -12,6 +12,7 @@ interface RegisterForm {
 }
 
 type setState<T> = React.Dispatch<React.SetStateAction<T>>
+type eventType = NativeSyntheticEvent<TextInputChangeEventData> | any
 
 export function useSendRegisterForm(initialForm: RegisterForm, setShow: setState<boolean>, setDateSetted: setState<boolean>, setDate: setState<Date>) {
     const [formData, setFormData] = useState(initialForm)
@@ -22,7 +23,7 @@ export function useSendRegisterForm(initialForm: RegisterForm, setShow: setState
     const [msg, setMsg] = useState("")
     const apiUrl = process.env.EXPO_PUBLIC_API_URL
 
-    const handleChange = (event: NativeSyntheticEvent<TextInputChangeEventData>, value: string) => {
+    const handleChange = (event: eventType | any, value: string) => {
         const { text } = event.nativeEvent
         setFormData({ ...formData, [value]: text })
     }
