@@ -53,7 +53,7 @@ export default function Register(): JSX.Element {
                             onChange={(event) => {
                                 const selectedDate = new Date(event.target.value);
                                 setDate(selectedDate);
-                                handleChange(event, 'date');
+                                changing(event, selectedDate);
                                 setDateSetted(true);
                             }}
                             style={{ width: 350, height: 60, borderColor: "gray", borderWidth: 1, margin: 10, borderRadius: 5, color: "#767676" }}
