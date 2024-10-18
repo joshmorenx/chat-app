@@ -1,12 +1,17 @@
 import express from 'express';
 import cors from 'cors';
 import register from './routes/register';
+import dbConnection from './controllers/dbConnection';
+require('dotenv').config();
+
 const app = express();
 
 const allowedOrigins: string[] = [
     'http://localhost:3000',
     'http://localhost:8081',
 ]
+
+dbConnection();
 
 app.use(cors({
     origin: allowedOrigins
