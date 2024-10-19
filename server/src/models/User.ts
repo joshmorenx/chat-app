@@ -1,12 +1,12 @@
 import { Schema, model } from "mongoose";
-import { User } from "../types/interfaces";
+import { UserInterface } from "../interfaces/UserInterface";
 
-const UserSchema:Schema = new Schema<User>({
+const UserSchema:Schema = new Schema<UserInterface>({
     id: { type: Number, unique: true },
-    firstName: { type: String },
-    lastName: { type: String },
-    email: { type: String, unique: true },
+    fullname: { type: String },
     username: { type: String, unique: true },
+    birthdate: { type: Date },
+    email: { type: String, unique: true },
     password: { type: String },
     isLogged: { type: Boolean, default: false },
     permissions: [{ type: Schema.Types.ObjectId, ref: "Permission" }],
@@ -19,6 +19,6 @@ const UserSchema:Schema = new Schema<User>({
     passwordRecoveryUsedTokens: [{ type: String }],
 });
 
-const User = model<User>("User", UserSchema);
+const User = model<UserInterface>("User", UserSchema);
 
 export default User;

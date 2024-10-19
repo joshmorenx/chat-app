@@ -15,10 +15,10 @@ export default function Register(): JSX.Element {
     const { formData, msg, setMsg, handleChange, changing, sendRequest } = useSendRegisterForm({
         fullname: '',
         username: '',
+        date: new Date(),
         email: '',
         password: '',
-        confirmPassword: '',
-        date: new Date()
+        confirmPassword: ''
     }, setShow, setDateSetted, setDate);
 
     const showDatepicker = (): void => {
@@ -35,8 +35,10 @@ export default function Register(): JSX.Element {
     }, [formData, dateSetted]);
 
     useEffect(() => {
-        if (msg) alert(msg);
-        setMsg('');
+        if (msg) {
+            alert(msg);
+            setMsg(null);
+        }
     }, [msg]);
 
     return (
@@ -48,7 +50,7 @@ export default function Register(): JSX.Element {
                 <View>
                     {Platform.OS === 'web' ? (
                         // Si estamos en web, usamos un input de tipo date de HTML5
-                        <input 
+                        <input
                             type="date"
                             onChange={(event) => {
                                 const selectedDate = new Date(event.target.value);
@@ -61,9 +63,9 @@ export default function Register(): JSX.Element {
                     ) : (
                         // Si estamos en móvil, usamos el DateTimePicker de react-native
                         <Text onPress={showDatepicker} style={{ width: 350, height: 60, borderColor: "gray", borderWidth: 1, margin: 10, padding: 10, borderRadius: 5, textAlignVertical: "center", color: "#767676" }}>
-                            {!dateSetted ? 'Select your date of birth' : 
+                            {!dateSetted ? 'Select your date of birth' :
                                 date.toLocaleDateString('en-US', {
-                                    month: 'short',  
+                                    month: 'short',
                                     day: '2-digit',
                                     year: 'numeric'
                                 })

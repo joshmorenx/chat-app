@@ -1,8 +1,9 @@
+require('dotenv').config();
+
 import express from 'express';
 import cors from 'cors';
 import register from './routes/register';
 import dbConnection from './controllers/dbConnection';
-require('dotenv').config();
 
 const app = express();
 

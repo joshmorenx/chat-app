@@ -5,10 +5,10 @@ import axios from 'axios';
 interface RegisterForm {
     fullname: string;
     username: string;
+    date: Date;
     email: string;
     password: string;
     confirmPassword: string;
-    date: Date;
 }
 
 type setState<T> = React.Dispatch<React.SetStateAction<T>>
@@ -20,7 +20,7 @@ export function useSendRegisterForm(initialForm: RegisterForm, setShow: setState
     const validPasswordString: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
     const validUsernameString: RegExp = /^[a-zA-Z0-9]+$/;
     const validFullNameString: RegExp = /^[a-zA-Z ]+$/;
-    const [msg, setMsg] = useState("")
+    const [msg, setMsg] = useState(null)
     const apiUrl = process.env.EXPO_PUBLIC_API_URL
 
     const handleChange = (event: eventType | any, value: string) => {
@@ -79,6 +79,7 @@ export function useSendRegisterForm(initialForm: RegisterForm, setShow: setState
             userData: formData
         }).then((response) => {
             setMsg(response.data.msg);
+            console.log(response.data);
         }).catch((error) => {
             setMsg(error.response.data.error);
         })
