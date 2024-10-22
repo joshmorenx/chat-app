@@ -1,4 +1,4 @@
-import { ScrollView, Platform } from "react-native";
+import { ScrollView, Platform, Modal } from "react-native";
 import { View, Text, TextInput, Keyboard } from "react-native";
 import { Button } from "react-native-paper";
 import { useState, useEffect } from "react";
@@ -12,6 +12,7 @@ import {
 
 export default function Register(): JSX.Element {
     const [pressed, setPressed] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [dateSetted, setDateSetted] = useState(false);
     const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
@@ -36,6 +37,10 @@ export default function Register(): JSX.Element {
         setDateSetted(true);
     };
 
+    const changeHandler = (): void => {
+        sendRequest();
+    };
+
     useEffect(() => {
         if (
             formData.fullname &&
@@ -53,7 +58,8 @@ export default function Register(): JSX.Element {
 
     useEffect(() => {
         if (msg) {
-            alert(msg);
+            // alert(msg);
+            setShowModal(true);
             setMsg(null);
         }
     }, [msg]);
@@ -66,6 +72,32 @@ export default function Register(): JSX.Element {
                 alignItems: "center",
             }}
         >
+            <Modal visible={showModal} animationType="slide">
+                <View
+                    style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+                >
+                    <Text
+                        style={{
+                            fontSize: 24,
+                            marginBottom: 10,
+                            fontWeight: "bold",
+                            textAlign: "center",
+                            color: "#0a7ea4",
+                        }}
+                    >
+                        Please check your email
+                    </Text>
+                    <Text style={{ width: 350, fontSize: 16, marginBottom: 10, textAlign: "center", color: "#0a7ea4" }}>
+                        we've sent you an email with a 6 digit code to
+                        verify your account.
+                    </Text>
+                    <TextInput
+                        aria-label="Enter the code"
+                        style={inputStyle}
+                        placeholder="Enter the code"
+                    />
+                </View>
+            </Modal>
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                 <Text
                     style={{
@@ -168,7 +200,7 @@ export default function Register(): JSX.Element {
                     style={inputStyle}
                 />
                 <Button
-                    onPress={sendRequest}
+                    onPress={changeHandler}
                     mode="contained-tonal"
                     disabled={!formFilled}
                     style={{
