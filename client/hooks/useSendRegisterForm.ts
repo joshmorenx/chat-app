@@ -75,7 +75,7 @@ export function useSendRegisterForm(initialForm: RegisterForm, setShow: setState
             alert("Passwords do not match");
             return;
         }
-        await axios.post(`${apiUrl}/api/register`, {
+        await axios.post(`${apiUrl}/api/preregister`, {
             userData: formData
         }).then((response) => {
             setMsg(response.data.msg);

@@ -14,4 +14,5 @@ export interface UserInterface {
     theme: string;
     confirmedRegistration: boolean;
     passwordRecoveryUsedTokens: string[];
+    activationCode: string;
 }

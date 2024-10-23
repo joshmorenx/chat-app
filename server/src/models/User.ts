@@ -17,6 +17,7 @@ const UserSchema:Schema = new Schema<UserInterface>({
     theme: { type: String, default: "light" },
     confirmedRegistration: { type: Boolean, default: false },
     passwordRecoveryUsedTokens: [{ type: String }],
+    activationCode: { type: String },
 });
 
 const User = model<UserInterface>("User", UserSchema);
